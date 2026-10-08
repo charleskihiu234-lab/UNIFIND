@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white"><h4 class="mb-0">Report Lost/Found Item</h4></div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Item Title</label>
+                        <input type="text" name="title" class="form-control" required placeholder="e.g. Blue National ID Card">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            <select name="category" class="form-select" required>
+                                <option value="ID Cards">ID Cards</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Keys">Keys</option>
+                                <option value="Academic">Academic Materials</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <select name="status" class="form-select" required>
+                                <option value="Lost">I Lost This Item</option>
+                                <option value="Found">I Found This Item</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Campus Location</label>
+                        <input type="text" name="location" class="form-control" required placeholder="e.g. Main Library Block B">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Detailed Description</label>
+                        <textarea name="description" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Verification Question (For Security/Fraud prevention)</label>
+                        <input type="text" name="verification_question" class="form-control" placeholder="e.g. What is the wallpaper image on the phone lock screen?">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Upload Picture</label>
+                        <input type="file" name="image" class="form-control" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Submit Record</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

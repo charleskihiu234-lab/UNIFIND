@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card p-3 shadow-sm mb-4">
+    <form method="GET" action="{{ url_for('index') }}" class="row g-3">
+        <div class="col-md-4">
+            <input type="text" name="q" class="form-control" placeholder="Search item title or description..." value="{{ request.args.get('q', '') }}">
+        </div>
+        <div class="col-md-3">
+            <select name="category" class="form-select">
+                <option value="All">All Categories</option>
+                <option value="ID Cards">ID Cards</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Keys">Keys</option>
+                <option value="Academic">Academic Materials</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <select name="status" class="form-select">
+                <option value="All">All Statuses</option>
+                <option value="Lost">Lost</option>
+                <option value="Found">Found</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filter</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if item.image_filename %}
+            <img src="{{ url_for('static', filename='uploads/' + item.image_filename) }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+            {% else %}
+            <div class="bg-secondary text-white text-center py-5" style="height: 200px;">No Image</div>
+            {% endif %}
+            <div class="card-body">
+                <span class="badge {% if item.status == 'Lost' %}bg-danger{% else %}bg-success{% endif %} mb-2">{{ item.status }}</span>
+                <span class="badge bg-secondary mb-2">{{ item.category }}</span>
+                <h5 class="card-title">{{ item.title }}</h5>
+                <p class="card-text text-muted mb-1"><strong>Location:</strong> {{ item.location }}</p>
+                <p class="card-text">{{ item.description | truncate(90) }}</p>
+            </div>
+            <div class="card-footer bg-white border-top-0">
+                <a href="{{ url_for('item_detail', item_id=item.id) }}" class="btn btn-outline-primary btn-sm w-100">View & Verify Claim</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center text-muted py-5">
+        <h5>No items found.</h5>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
